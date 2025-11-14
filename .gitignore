@@ -1,0 +1,6 @@
+data/
+venv*/
+*.sw*
+*.egg-info/
+*.pyc
+.log/

@@ -24,6 +24,5 @@ with Recorder('test2_results', 'test2_results.pkl') as recorder:
     step_shape = (None, 2, 2)
     windows = WindowMesh(umap_in, window_shape, step_shape)
 
-    breakpoint()
     model = EfficientEncoder(windows, img_stk)
     feature_map, low_res_feature_map, upscaler = model.extract_embedding()

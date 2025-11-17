@@ -17,6 +17,7 @@ logger.addHandler(logging.StreamHandler(sys.stderr))
 with Recorder('test2_results', 'test2_results.pkl') as recorder:
     img_stk = load('test2_*.bin', (2, 256, 256))
     to_video(img_stk[:, -2, :, :] % (2*np.pi), 'out.mp4', 30)
+    exit()
     recorder.register(img_stk)
     umap_in = img_stk[:, -1, :, :]
     window_shape = (umap_in.shape[0], 4, 4)

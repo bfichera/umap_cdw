@@ -2,6 +2,7 @@ import logging
 import sys
 import time
 import argparse
+from pathlib import Path
 
 import torch
 from numba import config
@@ -39,11 +40,14 @@ logger.info(f"Numba threads: {config.NUMBA_NUM_THREADS}")
 logger.info(f"PyTorch intra-op threads: {torch.get_num_threads()}")
 logger.info(f"PyTorch inter-op threads: {torch.get_num_interop_threads()}")
 
+results_path = Path.cwd() / 'results'
+if not results_path.exists():
+    results_path.mkdir(parents=True, exist_ok=True)
 for window_length in window_lengths:
     iteration_start_time = time.time()
     with Recorder(
             f'test2_results_{window_length:03d}',
-            f'test2_results_{window_length:03d}.pkl',
+            results_path / f'test2_results_{window_length:03d}.pkl',
     ) as recorder:
         img_stk = load('test2_*.bin', (2, 256, 256))
         to_video(img_stk[:, -2, :, :] % (2 * np.pi), 'out.mp4', 30)

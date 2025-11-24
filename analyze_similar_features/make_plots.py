@@ -40,7 +40,7 @@ for path in (Path.cwd() / 'results').glob('*.pkl'):
         img = np.ma.masked_array(r.umap_low_res_rgb[0, :, :, :], mask=True)
         for roi in cluster:
             img.mask[roi[0], roi[1], :] = False
-        axs[0, c].imshow(img)
+        axs[0, c].imshow(img.filled(np.nan))
         s0, s1, s2, s3, s4 = r.window_ttcf.shape
         mask = img.mask[:, :, 0]
         twotimes.append(r.window_ttcf.reshape(s0*s1*s2, s3, s4)[~mask.flatten(), :, :].mean(axis=0))

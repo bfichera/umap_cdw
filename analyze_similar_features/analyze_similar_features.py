@@ -50,7 +50,6 @@ for window_length in window_lengths:
             results_path / f'test2_results_{window_length:03d}.pkl',
     ) as recorder:
         img_stk = load('test2_*.bin', (2, 256, 256))
-        to_video(img_stk[:, -2, :, :] % (2 * np.pi), 'out.mp4', 30)
         recorder.register(img_stk)
         if quick_test:
             logger.warning('Using wrong size data!')
@@ -75,17 +74,20 @@ for window_length in window_lengths:
         umap.generate_rgb(sparsity_mult=20)
 
         recorder.register(
-            umap.get_rgb()[0],
+            umap.rgb[0],
             name='umap_get_rgb_0',
-            description='umap.get_rgb()[0]',
+            description='umap.rgb[0]',
         )
         recorder.register(
-            umap.get_rgb(),
-            name='umap_get_rgb',
-            description='umap.get_rgb()',
+            umap.rgb,
+            name='umap_rgb',
+            description='umap.rgb',
         )
-
-        UMAP_RGB_video(umap, umap_in, fps=4, alpha=0.5)
+        recorder.register(
+            umap.low_res_rgb,
+            name='umap_low_res_rgb',
+            description='umap.low_res_rgb',
+        )
 
     logger.info(
         'Single window length finished after '

@@ -4,4 +4,4 @@ export UMAP_CDW_DATA=../data
 export NUMBA_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OMP_NUM_THREADS=1
-../venv/bin/python test.py --min_half_window_length=6 --max_half_window_length=84 --window_length_steps=15
+../venv/bin/python -m pdb analyze_similar_features.py --min_half_window_length=12 --max_half_window_length=12 --window_length_steps=1

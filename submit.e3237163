@@ -1,182 +1,0 @@
-Numba thread layer: workqueue
-Numba threads: 32
-PyTorch intra-op threads: 32
-PyTorch inter-op threads: 64
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/1681 [00:00<?, ?it/s]Processing 2-TCF:   2%|▏         | 32/1681 [00:00<00:05, 305.97it/s]Processing 2-TCF:   4%|▍         | 64/1681 [00:07<03:29,  7.72it/s] Processing 2-TCF:   6%|▌         | 96/1681 [00:07<01:57, 13.54it/s]Processing 2-TCF:  10%|▉         | 160/1681 [00:07<00:50, 29.88it/s]Processing 2-TCF:  17%|█▋        | 288/1681 [00:07<00:18, 73.76it/s]Processing 2-TCF:  25%|██▍       | 416/1681 [00:07<00:09, 129.23it/s]Processing 2-TCF:  32%|███▏      | 544/1681 [00:07<00:05, 194.76it/s]Processing 2-TCF:  40%|███▉      | 672/1681 [00:08<00:04, 245.57it/s]Processing 2-TCF:  48%|████▊     | 800/1681 [00:08<00:03, 293.58it/s]Processing 2-TCF:  55%|█████▌    | 928/1681 [00:08<00:02, 334.49it/s]Processing 2-TCF:  63%|██████▎   | 1056/1681 [00:09<00:01, 368.75it/s]Processing 2-TCF:  70%|███████   | 1184/1681 [00:09<00:01, 399.31it/s]Processing 2-TCF:  78%|███████▊  | 1312/1681 [00:09<00:00, 423.45it/s]Processing 2-TCF:  86%|████████▌ | 1440/1681 [00:09<00:00, 442.16it/s]Processing 2-TCF:  93%|█████████▎| 1568/1681 [00:10<00:00, 456.42it/s]Processing 2-TCF: 100%|██████████| 1681/1681 [00:10<00:00, 166.55it/s]
-  0%|          | 0/1681 [00:00<?, ?it/s]  4%|▍         | 71/1681 [00:00<00:02, 703.23it/s]  9%|▉         | 152/1681 [00:00<00:02, 761.33it/s] 15%|█▍        | 244/1681 [00:00<00:01, 831.11it/s] 20%|██        | 344/1681 [00:00<00:01, 895.98it/s] 27%|██▋       | 456/1681 [00:00<00:01, 975.66it/s] 34%|███▍      | 568/1681 [00:00<00:01, 1022.95it/s] 40%|████      | 680/1681 [00:00<00:00, 1052.37it/s] 47%|████▋     | 792/1681 [00:00<00:00, 1073.58it/s] 54%|█████▍    | 904/1681 [00:00<00:00, 1085.16it/s] 60%|██████    | 1015/1681 [00:01<00:00, 1092.33it/s] 67%|██████▋   | 1127/1681 [00:01<00:00, 1098.01it/s] 74%|███████▎  | 1239/1681 [00:01<00:00, 1103.10it/s] 80%|████████  | 1350/1681 [00:01<00:00, 1105.06it/s] 88%|████████▊ | 1483/1681 [00:01<00:00, 1172.25it/s] 97%|█████████▋| 1637/1681 [00:01<00:00, 1280.27it/s]100%|██████████| 1681/1681 [00:01<00:00, 1094.23it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed:   1%| ▏          1/75 [00:00]Epochs completed:  11%| █          8/75 [00:00]Epochs completed:  19%| █▊         14/75 [00:00]Epochs completed:  27%| ██▋        20/75 [00:00]Epochs completed:  35%| ███▍       26/75 [00:00]Epochs completed:  43%| ████▎      32/75 [00:01]Epochs completed:  51%| █████      38/75 [00:01]Epochs completed:  59%| █████▊     44/75 [00:01]Epochs completed:  67%| ██████▋    50/75 [00:01]Epochs completed:  75%| ███████▍   56/75 [00:01]Epochs completed:  83%| ████████▎  62/75 [00:01]Epochs completed:  91%| █████████  68/75 [00:01]Epochs completed:  99%| █████████▊ 74/75 [00:01]Epochs completed: 100%| ██████████ 75/75 [00:01]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed:  32%| ███▏       8/25 [00:00]Epochs completed:  64%| ██████▍    16/25 [00:00]Epochs completed:  96%| █████████▌ 24/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 55%|█████▌    | 221/401 [00:00<00:00, 2209.66it/s]100%|██████████| 401/401 [00:00<00:00, 2084.71it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_012.pkl
-Single window length finished after 72.74013423919678 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/484 [00:00<?, ?it/s]Processing 2-TCF:  13%|█▎        | 64/484 [00:00<00:05, 75.69it/s]Processing 2-TCF:  20%|█▉        | 96/484 [00:01<00:04, 95.14it/s]Processing 2-TCF:  26%|██▋       | 128/484 [00:01<00:03, 107.68it/s]Processing 2-TCF:  33%|███▎      | 160/484 [00:01<00:02, 117.77it/s]Processing 2-TCF:  40%|███▉      | 192/484 [00:01<00:02, 126.66it/s]Processing 2-TCF:  46%|████▋     | 224/484 [00:01<00:01, 136.11it/s]Processing 2-TCF:  53%|█████▎    | 256/484 [00:02<00:01, 140.99it/s]Processing 2-TCF:  60%|█████▉    | 288/484 [00:02<00:01, 141.04it/s]Processing 2-TCF:  66%|██████▌   | 320/484 [00:02<00:01, 133.35it/s]Processing 2-TCF:  73%|███████▎  | 352/484 [00:02<00:01, 131.25it/s]Processing 2-TCF:  79%|███████▉  | 384/484 [00:03<00:00, 136.41it/s]Processing 2-TCF:  86%|████████▌ | 416/484 [00:03<00:00, 139.79it/s]Processing 2-TCF:  93%|█████████▎| 448/484 [00:03<00:00, 144.41it/s]Processing 2-TCF:  99%|█████████▉| 480/484 [00:03<00:00, 149.41it/s]Processing 2-TCF: 100%|██████████| 484/484 [00:03<00:00, 130.18it/s]
-  0%|          | 0/484 [00:00<?, ?it/s] 26%|██▌       | 125/484 [00:00<00:00, 1248.93it/s] 58%|█████▊    | 280/484 [00:00<00:00, 1425.47it/s] 95%|█████████▌| 461/484 [00:00<00:00, 1596.80it/s]100%|██████████| 484/484 [00:00<00:00, 1546.78it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed:  29%| ██▉        22/75 [00:00]Epochs completed:  59%| █████▊     44/75 [00:00]Epochs completed:  88%| ████████▊  66/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed:  92%| █████████▏ 23/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 44%|████▍     | 176/401 [00:00<00:00, 1754.08it/s] 91%|█████████ | 365/401 [00:00<00:00, 1830.99it/s]100%|██████████| 401/401 [00:00<00:00, 1838.71it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_022.pkl
-Single window length finished after 19.741607189178467 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/196 [00:00<?, ?it/s]Processing 2-TCF:  33%|███▎      | 64/196 [00:00<00:00, 133.23it/s]Processing 2-TCF:  65%|██████▌   | 128/196 [00:00<00:00, 207.46it/s]Processing 2-TCF: 100%|██████████| 196/196 [00:00<00:00, 256.45it/s]
-  0%|          | 0/196 [00:00<?, ?it/s] 63%|██████▎   | 124/196 [00:00<00:00, 1239.20it/s]100%|██████████| 196/196 [00:00<00:00, 1264.25it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed:  39%| ███▊       29/75 [00:00]Epochs completed:  81%| ████████▏  61/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 28%|██▊       | 111/401 [00:00<00:00, 1102.33it/s] 57%|█████▋    | 230/401 [00:00<00:00, 1149.87it/s] 86%|████████▌ | 345/401 [00:00<00:00, 1145.98it/s]100%|██████████| 401/401 [00:00<00:00, 1130.80it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_034.pkl
-Single window length finished after 12.595737218856812 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/100 [00:00<?, ?it/s]Processing 2-TCF:  64%|██████▍   | 64/100 [00:00<00:00, 135.76it/s]Processing 2-TCF:  96%|█████████▌| 96/100 [00:00<00:00, 155.52it/s]Processing 2-TCF: 100%|██████████| 100/100 [00:00<00:00, 157.32it/s]
-  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 1255.39it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed:  88%| ████████▊  66/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 25%|██▍       | 100/401 [00:00<00:00, 991.10it/s] 52%|█████▏    | 209/401 [00:00<00:00, 1045.33it/s] 79%|███████▉  | 318/401 [00:00<00:00, 1061.64it/s]100%|██████████| 401/401 [00:00<00:00, 1062.97it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_044.pkl
-Single window length finished after 11.126574754714966 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/64 [00:00<?, ?it/s]Processing 2-TCF: 100%|██████████| 64/64 [00:00<00:00, 107.94it/s]Processing 2-TCF: 100%|██████████| 64/64 [00:00<00:00, 107.88it/s]
-  0%|          | 0/64 [00:00<?, ?it/s]100%|██████████| 64/64 [00:00<00:00, 1193.73it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 27%|██▋       | 107/401 [00:00<00:00, 1067.60it/s] 55%|█████▍    | 219/401 [00:00<00:00, 1094.99it/s] 83%|████████▎ | 331/401 [00:00<00:00, 1104.18it/s]100%|██████████| 401/401 [00:00<00:00, 1104.27it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_056.pkl
-Single window length finished after 10.556518077850342 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/36 [00:00<?, ?it/s]Processing 2-TCF: 100%|██████████| 36/36 [00:00<00:00, 14594.52it/s]
-  0%|          | 0/36 [00:00<?, ?it/s]100%|██████████| 36/36 [00:00<00:00, 1223.01it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 28%|██▊       | 111/401 [00:00<00:00, 1108.98it/s] 58%|█████▊    | 232/401 [00:00<00:00, 1167.62it/s] 89%|████████▉ | 357/401 [00:00<00:00, 1204.15it/s]100%|██████████| 401/401 [00:00<00:00, 1201.33it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_066.pkl
-Single window length finished after 8.963841438293457 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/25 [00:00<?, ?it/s]Processing 2-TCF: 100%|██████████| 25/25 [00:00<00:00, 20751.55it/s]
-  0%|          | 0/25 [00:00<?, ?it/s]100%|██████████| 25/25 [00:00<00:00, 1790.48it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 27%|██▋       | 108/401 [00:00<00:00, 1075.72it/s] 57%|█████▋    | 229/401 [00:00<00:00, 1153.28it/s] 87%|████████▋ | 350/401 [00:00<00:00, 1178.69it/s]100%|██████████| 401/401 [00:00<00:00, 1158.18it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_078.pkl
-Single window length finished after 9.099641561508179 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/16 [00:00<?, ?it/s]Processing 2-TCF: 100%|██████████| 16/16 [00:00<00:00, 13299.42it/s]
-  0%|          | 0/16 [00:00<?, ?it/s]100%|██████████| 16/16 [00:00<00:00, 2124.51it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 25%|██▌       | 101/401 [00:00<00:00, 1006.78it/s] 56%|█████▌    | 223/401 [00:00<00:00, 1131.57it/s] 88%|████████▊ | 354/401 [00:00<00:00, 1210.83it/s]100%|██████████| 401/401 [00:00<00:00, 1194.74it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_090.pkl
-Single window length finished after 8.624149799346924 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/16 [00:00<?, ?it/s]Processing 2-TCF: 100%|██████████| 16/16 [00:00<00:00, 11606.51it/s]
-  0%|          | 0/16 [00:00<?, ?it/s]100%|██████████| 16/16 [00:00<00:00, 2163.89it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 32%|███▏      | 129/401 [00:00<00:00, 1283.27it/s] 67%|██████▋   | 269/401 [00:00<00:00, 1350.53it/s]100%|██████████| 401/401 [00:00<00:00, 1350.89it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_100.pkl
-Single window length finished after 8.880920171737671 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/9 [00:00<?, ?it/s]Processing 2-TCF: 100%|██████████| 9/9 [00:00<00:00, 7786.46it/s]
-  0%|          | 0/9 [00:00<?, ?it/s]100%|██████████| 9/9 [00:00<00:00, 2119.29it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:2462: UserWarning: n_neighbors is larger than the dataset size; truncating to X.shape[0] - 1
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 26%|██▌       | 105/401 [00:00<00:00, 1042.23it/s] 53%|█████▎    | 213/401 [00:00<00:00, 1062.58it/s] 80%|███████▉  | 320/401 [00:00<00:00, 1057.52it/s]100%|██████████| 401/401 [00:00<00:00, 1064.20it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_112.pkl
-Single window length finished after 8.279908418655396 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/9 [00:00<?, ?it/s]Processing 2-TCF: 100%|██████████| 9/9 [00:00<00:00, 7918.76it/s]
-  0%|          | 0/9 [00:00<?, ?it/s]100%|██████████| 9/9 [00:00<00:00, 2071.03it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:2462: UserWarning: n_neighbors is larger than the dataset size; truncating to X.shape[0] - 1
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 24%|██▍       | 98/401 [00:00<00:00, 974.11it/s] 51%|█████     | 204/401 [00:00<00:00, 1022.79it/s] 78%|███████▊  | 311/401 [00:00<00:00, 1041.58it/s]100%|██████████| 401/401 [00:00<00:00, 1041.71it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_122.pkl
-Single window length finished after 8.428264617919922 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/4 [00:00<?, ?it/s]Processing 2-TCF: 100%|██████████| 4/4 [00:00<00:00, 3567.34it/s]
-  0%|          | 0/4 [00:00<?, ?it/s]100%|██████████| 4/4 [00:00<00:00, 1912.37it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:2462: UserWarning: n_neighbors is larger than the dataset size; truncating to X.shape[0] - 1
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 30%|██▉       | 120/401 [00:00<00:00, 1195.98it/s] 63%|██████▎   | 252/401 [00:00<00:00, 1266.09it/s] 98%|█████████▊| 392/401 [00:00<00:00, 1326.71it/s]100%|██████████| 401/401 [00:00<00:00, 1303.26it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_134.pkl
-Single window length finished after 7.640185117721558 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/4 [00:00<?, ?it/s]Processing 2-TCF: 100%|██████████| 4/4 [00:00<00:00, 4048.56it/s]
-  0%|          | 0/4 [00:00<?, ?it/s]100%|██████████| 4/4 [00:00<00:00, 1933.08it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:2462: UserWarning: n_neighbors is larger than the dataset size; truncating to X.shape[0] - 1
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 26%|██▌       | 105/401 [00:00<00:00, 1047.78it/s] 54%|█████▎    | 215/401 [00:00<00:00, 1076.79it/s] 81%|████████  | 323/401 [00:00<00:00, 1074.43it/s]100%|██████████| 401/401 [00:00<00:00, 1073.27it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_144.pkl
-Single window length finished after 8.476972103118896 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/4 [00:00<?, ?it/s]Processing 2-TCF: 100%|██████████| 4/4 [00:00<00:00, 3425.32it/s]
-  0%|          | 0/4 [00:00<?, ?it/s]100%|██████████| 4/4 [00:00<00:00, 1908.24it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:2462: UserWarning: n_neighbors is larger than the dataset size; truncating to X.shape[0] - 1
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 26%|██▌       | 103/401 [00:00<00:00, 1028.72it/s] 54%|█████▎    | 215/401 [00:00<00:00, 1080.48it/s] 82%|████████▏ | 328/401 [00:00<00:00, 1101.28it/s]100%|██████████| 401/401 [00:00<00:00, 1094.14it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_156.pkl
-Single window length finished after 8.266831874847412 seconds.
-File could not be loaded: test2_alpha.bin
-Expected shape (2, 256, 256), got (1, 256, 256)
-Processing 2-TCF:   0%|          | 0/4 [00:00<?, ?it/s]Processing 2-TCF: 100%|██████████| 4/4 [00:00<00:00, 2960.51it/s]
-  0%|          | 0/4 [00:00<?, ?it/s]100%|██████████| 4/4 [00:00<00:00, 1953.34it/s]
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
-  warn(
-/home/bfichera/data/projects/umap_cdw/venv/lib/python3.10/site-packages/umap/umap_.py:2462: UserWarning: n_neighbors is larger than the dataset size; truncating to X.shape[0] - 1
-  warn(
-Epochs completed:   0%|            0/75 [00:00]Epochs completed: 100%| ██████████ 75/75 [00:00]
-Epochs completed:   0%|            0/25 [00:00]Epochs completed: 100%| ██████████ 25/25 [00:00]
-  0%|          | 0/401 [00:00<?, ?it/s] 27%|██▋       | 110/401 [00:00<00:00, 1097.76it/s] 58%|█████▊    | 234/401 [00:00<00:00, 1178.62it/s] 90%|█████████ | 361/401 [00:00<00:00, 1219.71it/s]100%|██████████| 401/401 [00:00<00:00, 1200.51it/s]
-Record created at /home/bfichera/data/projects/umap_cdw/test2_results_168.pkl
-Single window length finished after 8.423947095870972 seconds.
-Entire script finished after 211.84860491752625 seconds.

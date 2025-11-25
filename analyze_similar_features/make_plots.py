@@ -55,6 +55,7 @@ for path in (Path.cwd() / 'results').glob('*.pkl'):
     for t, twotime in enumerate(twotimes):
         axs[1, t].imshow(twotime, vmin=0, vmax=2)
     plt.savefig(plots_folder / 'cluster_twotimes')
+    plt.close()
 
     s0, s1, s2, s3, s4 = r.window_ttcf.shape
     reshaped_window_ttcf = r.window_ttcf.reshape(s0, s1, s2, -1)

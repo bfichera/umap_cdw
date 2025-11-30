@@ -15,10 +15,11 @@ from UMAP_RGB.utils.UMAP_RGB import UMAP, UMAP_RGB_video
 from umap_cdw import load, to_video
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--quick-test')
+parser.add_argument('--quick-test', action='store_true')
 parser.add_argument('--min_half_window_length', type=int, default=12)
 parser.add_argument('--max_half_window_length', type=int, default=12)
 parser.add_argument('--window_length_steps', type=int, default=1)
+parser.add_argument('--no-save', action='store_true')
 
 _cfg = parser.parse_args()
 quick_test = _cfg.quick_test
@@ -28,6 +29,7 @@ window_lengths = np.linspace(
     _cfg.window_length_steps,
     endpoint=True
 ).astype(int) * 2
+save = not _cfg.no_save
 
 start_time = time.time()
 
@@ -48,9 +50,11 @@ for window_length in window_lengths:
     with Recorder(
             f'test2_results_{window_length:03d}',
             results_path / f'test2_results_{window_length:03d}.pkl',
+            save=save,
     ) as recorder:
         img_stk = load('test2_*.bin', (2, 256, 256))
-        to_video(img_stk[:, -2, :, :] % (2 * np.pi), 'out.mp4', 30)
+        to_video(img_stk[:, -2, :, :] % (2 * np.pi), 'phase.mp4', 30)
+        to_video(img_stk[:, -1, :, :] % (2 * np.pi), 'charge.mp4', 30)
         recorder.register(img_stk)
         if quick_test:
             logger.warning('Using wrong size data!')
@@ -74,14 +78,14 @@ for window_length in window_lengths:
         umap.generate_rgb(sparsity_mult=20)
 
         recorder.register(
-            umap.get_rgb()[0],
-            name='umap_get_rgb_0',
-            description='umap.get_rgb()[0]',
+            umap.rgb[0],
+            name='umap_rgb_0',
+            description='umap.rgb[0]',
         )
         recorder.register(
-            umap.get_rgb(),
-            name='umap_get_rgb',
-            description='umap.get_rgb()',
+            umap.rgb,
+            name='umap_rgb',
+            description='umap.rgb',
         )
 
         UMAP_RGB_video(umap, umap_in, fps=4, alpha=0.5)

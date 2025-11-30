@@ -7,7 +7,6 @@ import itertools
 
 import torch
 from numba import config
-import numpy as np
 from workflowrecorder import Recorder
 from UMAP_RGB.utils.window import WindowMesh
 from UMAP_RGB.networks.EfficientNet_model import EfficientEncoder
@@ -17,20 +16,13 @@ from umap_cdw import load
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--quick-test', action='store_true')
-parser.add_argument('--min_half_window_length', type=int, default=12)
-parser.add_argument('--max_half_window_length', type=int, default=12)
-parser.add_argument('--window_length_steps', type=int, default=1)
-parser.add_argument('--window_stepsize_ratio', type=int, default=2)
+parser.add_argument('--half-window-lengths', type=int, nargs='+')
+parser.add_argument('--window-stepsize-ratios', type=int, nargs='+')
 
 _cfg = parser.parse_args()
 quick_test = _cfg.quick_test
-window_lengths = np.linspace(
-    _cfg.min_half_window_length,
-    _cfg.max_half_window_length,
-    _cfg.window_length_steps,
-    endpoint=True
-).astype(int) * 2
-window_stepsizes = (window_lengths / _cfg.window_stepsize_ratio).astype(int)
+window_lengths = [c * 2 for c in _cfg.half_window_lengths]
+window_stepsize_ratios = _cfg.window_stepsize_ratios
 
 start_time = time.time()
 
@@ -46,11 +38,11 @@ logger.info(f"PyTorch inter-op threads: {torch.get_num_interop_threads()}")
 results_path = Path.cwd() / 'results'
 if not results_path.exists():
     results_path.mkdir(parents=True, exist_ok=True)
-for window_length, window_stepsize in itertools.product(window_lengths,
-                                                        window_stepsizes):
+for window_length, window_stepsize_ratio in itertools.product(
+        window_lengths, window_stepsize_ratios):
     iteration_start_time = time.time()
     with Recorder(
-            f'test2_results_{window_length:03d}_{window_stepsize:03d}',
+            f'test2_results_{window_length:03d}_{window_stepsize_ratio:03d}',
             results_path / f'test2_results_{window_length:03d}.pkl',
     ) as recorder:
         img_stk = load('test2_*.bin', (2, 256, 256))
@@ -63,7 +55,10 @@ for window_length, window_stepsize in itertools.product(window_lengths,
         recorder.register(umap_in)
         window_shape = (umap_in.shape[0], window_length, window_length)
         recorder.register(window_shape)
-        step_shape = (umap_in.shape[0], window_stepsize, window_stepsize)
+        step_shape = (
+            umap_in.shape[0], window_length // window_stepsize_ratio,
+            window_length // window_stepsize_ratio
+        )
         recorder.register(step_shape)
         windows = WindowMesh(umap_in, window_shape, step_shape)
 

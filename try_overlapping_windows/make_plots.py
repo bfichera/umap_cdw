@@ -80,4 +80,3 @@ for path in tqdm(list((Path.cwd() / 'results').glob('test2_results_*_*.pkl'))):
     plt.savefig(plots_folder / 'michelson_contrast')
     show()
     plt.close()
-    exit()

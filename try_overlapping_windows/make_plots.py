@@ -61,6 +61,7 @@ for path in tqdm(list((Path.cwd() / 'results').glob('test2_results_*_*.pkl'))):
     ax.set_zlabel('b')
     plt.savefig(plots_folder / 'rgb_scatter')
     show()
+    plt.close()
 
     s0, s1, s2, s3, s4 = r.window_ttcf.shape
     plt.imshow(
@@ -68,6 +69,7 @@ for path in tqdm(list((Path.cwd() / 'results').glob('test2_results_*_*.pkl'))):
     )
     plt.savefig(plots_folder / 'rms_contrast')
     show()
+    plt.close()
 
     t = r.window_ttcf.reshape(s0, s1, s2, s3 * s4)
     plt.imshow(
@@ -78,3 +80,5 @@ for path in tqdm(list((Path.cwd() / 'results').glob('test2_results_*_*.pkl'))):
     )
     plt.savefig(plots_folder / 'michelson_contrast')
     show()
+    plt.close()
+    exit()

@@ -40,6 +40,12 @@ for path in tqdm(list((Path.cwd() / 'results').glob('test2_results_*_*.pkl'))):
     plt.imshow(r.img_stk[0, 1, :, :])
     plt.savefig(plots_folder / 'img_stk1')
     show()
+    plt.imshow(np.sum(r.img_stk[:, 0, :, :], axis=0))
+    plt.savefig(plots_folder / 'sum_img_stk0')
+    show()
+    plt.imshow(np.sum(r.img_stk[:, 1, :, :], axis=0))
+    plt.savefig(plots_folder / 'sum_img_stk1')
+    show()
     plt.imshow(
         np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 0, :, :])))
     )

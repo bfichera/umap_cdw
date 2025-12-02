@@ -28,10 +28,10 @@ for path in tqdm(list((Path.cwd() / 'results').glob('test2_results_*_*.pkl'))):
     plots_folder.mkdir(parents=True, exist_ok=True)
     with open(path, 'rb') as fh:
         r = pickle.load(fh)
-    plt.imshow(r.umap_low_res_rgb[0, :, :, :])
+    plt.imshow(r.mapper_low_res_rgb[0, :, :, :])
     plt.savefig(plots_folder / 'low_res_rgb')
     show()
-    plt.imshow(r.umap_rgb[0, :, :, :])
+    plt.imshow(r.mapper_rgb[0, :, :, :])
     plt.savefig(plots_folder / 'rgb')
     show()
     plt.imshow(r.img_stk[0, 0, :, :])
@@ -58,8 +58,8 @@ for path in tqdm(list((Path.cwd() / 'results').glob('test2_results_*_*.pkl'))):
     show()
 
     fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
-    u0, u1, u2, u3 = r.umap_low_res_rgb.shape
-    collapsed_rgb = r.umap_low_res_rgb.reshape(u1 * u2, 3)
+    u0, u1, u2, u3 = r.mapper_low_res_rgb.shape
+    collapsed_rgb = r.mapper_low_res_rgb.reshape(u1 * u2, 3)
     ax.scatter(*(collapsed_rgb[:, i] for i in range(3)))
     ax.set_xlabel('r')
     ax.set_ylabel('g')

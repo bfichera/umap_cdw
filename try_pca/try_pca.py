@@ -10,7 +10,7 @@ from numba import config
 from workflowrecorder import Recorder
 from UMAP_RGB.utils.window import WindowMesh
 from UMAP_RGB.networks.EfficientNet_model import EfficientEncoder
-from UMAP_RGB.utils.UMAP_RGB import PCA
+from UMAP_RGB.utils.PCA_RGB import PCA
 
 from umap_cdw import load
 
@@ -50,43 +50,43 @@ for window_length, window_stepsize_ratio in itertools.product(
         recorder.register(img_stk)
         if quick_test:
             logger.warning('Using wrong size data!')
-            reducer_in = img_stk[:20, -1, ::4, ::4]
+            mapper_in = img_stk[:20, -1, ::4, ::4]
         else:
-            reducer_in = img_stk[:, -1, :, :]
-        recorder.register(reducer_in)
-        window_shape = (reducer_in.shape[0], window_length, window_length)
+            mapper_in = img_stk[:, -1, :, :]
+        recorder.register(mapper_in)
+        window_shape = (mapper_in.shape[0], window_length, window_length)
         recorder.register(window_shape)
         step_shape = (
-            reducer_in.shape[0], window_length // window_stepsize_ratio,
+            mapper_in.shape[0], window_length // window_stepsize_ratio,
             window_length // window_stepsize_ratio
         )
         recorder.register(step_shape)
-        windows = WindowMesh(reducer_in, window_shape, step_shape)
+        windows = WindowMesh(mapper_in, window_shape, step_shape)
 
-        model = EfficientEncoder(windows, reducer_in)
+        model = EfficientEncoder(windows, mapper_in)
         low_res_feature_map, upscaler = model.extract_embedding(
             full_output=False
         )
 
         recorder.register(windows.window_ttcf, name='window_ttcf')
 
-        reducer = UMAP(low_res_feature_map, upscaler)
-        reducer.generate_rgb(sparsity_mult=20)
+        mapper = PCA(low_res_feature_map, upscaler)
+        mapper.generate_rgb(sparsity_mult=20)
 
         recorder.register(
-            reducer.rgb[0],
-            name='reducer_get_rgb_0',
-            description='reducer.rgb[0]',
+            mapper.rgb[0],
+            name='mapper_get_rgb_0',
+            description='mapper.rgb[0]',
         )
         recorder.register(
-            reducer.rgb,
-            name='reducer_rgb',
-            description='reducer.rgb',
+            mapper.rgb,
+            name='mapper_rgb',
+            description='mapper.rgb',
         )
         recorder.register(
-            reducer.low_res_rgb,
-            name='reducer_low_res_rgb',
-            description='reducer.low_res_rgb',
+            mapper.low_res_rgb,
+            name='mapper_low_res_rgb',
+            description='mapper.low_res_rgb',
         )
 
     logger.info(

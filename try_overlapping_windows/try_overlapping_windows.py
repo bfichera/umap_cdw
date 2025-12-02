@@ -43,7 +43,7 @@ for window_length, window_stepsize_ratio in itertools.product(
     iteration_start_time = time.time()
     with Recorder(
             f'test2_results_{window_length:03d}_{window_stepsize_ratio:03d}',
-            results_path / f'test2_results_{window_length:03d}.pkl',
+            results_path / f'test2_results_{window_length:03d}_{window_stepsize_ratio:03d}.pkl',
     ) as recorder:
         img_stk = load('test2_*.bin', (2, 256, 256))
         recorder.register(img_stk)

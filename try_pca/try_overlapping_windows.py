@@ -1,0 +1,99 @@
+import logging
+import sys
+import time
+import argparse
+from pathlib import Path
+import itertools
+
+import torch
+from numba import config
+from workflowrecorder import Recorder
+from UMAP_RGB.utils.window import WindowMesh
+from UMAP_RGB.networks.EfficientNet_model import EfficientEncoder
+from UMAP_RGB.utils.UMAP_RGB import PCA
+
+from umap_cdw import load
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--quick-test', action='store_true')
+parser.add_argument('--half-window-lengths', type=int, nargs='+')
+parser.add_argument('--window-stepsize-ratios', type=int, nargs='+')
+
+_cfg = parser.parse_args()
+quick_test = _cfg.quick_test
+window_lengths = [c * 2 for c in _cfg.half_window_lengths]
+window_stepsize_ratios = _cfg.window_stepsize_ratios
+
+start_time = time.time()
+
+logger = logging.getLogger()
+logger.addHandler(logging.StreamHandler(sys.stderr))
+logger.setLevel(logging.INFO)
+
+logger.info(f"Numba thread layer: {config.THREADING_LAYER}")
+logger.info(f"Numba threads: {config.NUMBA_NUM_THREADS}")
+logger.info(f"PyTorch intra-op threads: {torch.get_num_threads()}")
+logger.info(f"PyTorch inter-op threads: {torch.get_num_interop_threads()}")
+
+results_path = Path.cwd() / 'results'
+if not results_path.exists():
+    results_path.mkdir(parents=True, exist_ok=True)
+for window_length, window_stepsize_ratio in itertools.product(
+        window_lengths, window_stepsize_ratios):
+    iteration_start_time = time.time()
+    with Recorder(
+            f'test2_results_{window_length:03d}_{window_stepsize_ratio:03d}',
+            results_path / f'test2_results_{window_length:03d}'
+            f'_{window_stepsize_ratio:03d}.pkl',
+    ) as recorder:
+        img_stk = load('test2_*.bin', (2, 256, 256))
+        recorder.register(img_stk)
+        if quick_test:
+            logger.warning('Using wrong size data!')
+            reducer_in = img_stk[:20, -1, ::4, ::4]
+        else:
+            reducer_in = img_stk[:, -1, :, :]
+        recorder.register(reducer_in)
+        window_shape = (reducer_in.shape[0], window_length, window_length)
+        recorder.register(window_shape)
+        step_shape = (
+            reducer_in.shape[0], window_length // window_stepsize_ratio,
+            window_length // window_stepsize_ratio
+        )
+        recorder.register(step_shape)
+        windows = WindowMesh(reducer_in, window_shape, step_shape)
+
+        model = EfficientEncoder(windows, reducer_in)
+        low_res_feature_map, upscaler = model.extract_embedding(
+            full_output=False
+        )
+
+        recorder.register(windows.window_ttcf, name='window_ttcf')
+
+        reducer = UMAP(low_res_feature_map, upscaler)
+        reducer.generate_rgb(sparsity_mult=20)
+
+        recorder.register(
+            reducer.rgb[0],
+            name='reducer_get_rgb_0',
+            description='reducer.rgb[0]',
+        )
+        recorder.register(
+            reducer.rgb,
+            name='reducer_rgb',
+            description='reducer.rgb',
+        )
+        recorder.register(
+            reducer.low_res_rgb,
+            name='reducer_low_res_rgb',
+            description='reducer.low_res_rgb',
+        )
+
+    logger.info(
+        'Single window length / stepsize combination finished after '
+        f'{time.time() - iteration_start_time} seconds.'
+    )
+
+logger.info(
+    f'Entire script finished after {time.time() - start_time} seconds.'
+)

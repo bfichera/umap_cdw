@@ -1,7 +1,6 @@
 from pathlib import Path
 import re
 import pickle
-import json
 import argparse
 
 import numpy as np
@@ -21,11 +20,11 @@ else:
 
 for path in tqdm(list((Path.cwd() / 'results').glob('test2_results_*_*.pkl'))):
     window_length, window_stepsize_ratio = (
-        int(s) for s in re.match(
-            r'^test2_results_([0-9]*)_([0-9]*).pkl$', path.name
-        ).groups()
+        int(s) for s in
+        re.match(r'^test2_results_([0-9]*)_([0-9]*).pkl$', path.name).groups()
     )
-    plots_folder = Path.cwd() / 'plots' / str(window_length) / str(window_stepsize_ratio)
+    plots_folder = Path.cwd() / 'plots' / str(window_length
+                                              ) / str(window_stepsize_ratio)
     plots_folder.mkdir(parents=True, exist_ok=True)
     with open(path, 'rb') as fh:
         r = pickle.load(fh)

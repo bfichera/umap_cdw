@@ -17,4 +17,5 @@ export OMP_NUM_THREADS=$PBS_NP
 
 export NUMBA_THREADING_LAYER=workqueue
 export UMAP_CDW_DATA=../data
-../venv/bin/python normalize_twotime_contrast.py --half-window-lengths 6 12 18 24 --window-stepsize-ratios 2 3 6 12
+../venv/bin/python normalize_twotime_contrast.py --half-window-lengths 6 12 --window-stepsize-ratios 2 3 6 12 --normalizer=rms
+../venv/bin/python normalize_twotime_contrast.py --half-window-lengths 6 12 --window-stepsize-ratios 2 3 6 12 --normalizer=michelson

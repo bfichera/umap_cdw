@@ -9,7 +9,10 @@ from tqdm import tqdm
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', action='store_true')
-do_show = parser.parse_args().show
+parser.add_argument('--normalizer', type=str, choices=['michelson', 'rms'])
+_cfg = parser.parse_args()
+do_show = _cfg.show
+normalizer = _cfg.normalizer
 if do_show:
     show = plt.show
 else:
@@ -18,12 +21,12 @@ else:
         pass
 
 
-for path in tqdm(list((Path.cwd() / 'results').glob('test2_results_*_*.pkl'))):
+for path in tqdm(list((Path.cwd() / f'results_{normalizer}').glob('test2_results_*_*.pkl'))):
     window_length, window_stepsize_ratio = (
         int(s) for s in
         re.match(r'^test2_results_([0-9]*)_([0-9]*).pkl$', path.name).groups()
     )
-    plots_folder = Path.cwd() / 'plots' / str(window_length
+    plots_folder = Path.cwd() / f'plots_{normalizer}' / str(window_length
                                               ) / str(window_stepsize_ratio)
     plots_folder.mkdir(parents=True, exist_ok=True)
     with open(path, 'rb') as fh:

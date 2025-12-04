@@ -62,10 +62,13 @@ if not results_path.exists():
 for window_length, window_stepsize_ratio in itertools.product(
         window_lengths, window_stepsize_ratios):
     iteration_start_time = time.time()
+    recorder_path = results_path / f'test2_results_{window_length:03d}_{window_stepsize_ratio:03d}.pkl'
+    if recorder_path.exists():
+        logger.warning(f'Skipping {recorder_path} because it already exists.')
+        continue
     with Recorder(
             f'test2_results_{window_length:03d}_{window_stepsize_ratio:03d}',
-            results_path / f'test2_results_{window_length:03d}'
-            f'_{window_stepsize_ratio:03d}.pkl',
+            recorder_path,
     ) as recorder:
         img_stk = load('test2_*.bin', (2, 256, 256))
         recorder.register(img_stk)

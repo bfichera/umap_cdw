@@ -5,44 +5,24 @@ import argparse
 from pathlib import Path
 import itertools
 
-import numpy as np
 import torch
 from numba import config
 from workflowrecorder import Recorder
 from UMAP_RGB.utils.window import WindowMesh
 from UMAP_RGB.networks.EfficientNet_model import EfficientEncoder
-from UMAP_RGB.utils.PCA_RGB import PCA
+from UMAP_RGB.utils.UMAP_RGB import UMAP
 
 from umap_cdw import load
-
-
-def normalize_michelson_contrast(im):
-    mini = np.amin(im, axis=(-1, -2), keepdims=True)
-    maxi = np.amax(im, axis=(-1, -2), keepdims=True)
-    return (im - mini) / (maxi - mini)
-
-
-def normalize_rms_contrast(im):
-    mean = np.mean(im, axis=(-1, -2), keepdims=True)
-    std = np.std(im, axis=(-1, -2), keepdims=True)
-    return im + std - mean
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--quick-test', action='store_true')
 parser.add_argument('--half-window-lengths', type=int, nargs='+')
 parser.add_argument('--window-stepsize-ratios', type=int, nargs='+')
-parser.add_argument('--normalizer', type=str, choices=['michelson', 'rms'])
 
 _cfg = parser.parse_args()
 quick_test = _cfg.quick_test
 window_lengths = [c * 2 for c in _cfg.half_window_lengths]
 window_stepsize_ratios = _cfg.window_stepsize_ratios
-normalizer_str = _cfg.normalizer
-if normalizer_str == 'michelson':
-    normalizer = normalize_michelson_contrast
-if normalizer_str == 'rms':
-    normalizer = normalize_rms_contrast
 
 start_time = time.time()
 
@@ -55,22 +35,16 @@ logger.info(f"Numba threads: {config.NUMBA_NUM_THREADS}")
 logger.info(f"PyTorch intra-op threads: {torch.get_num_threads()}")
 logger.info(f"PyTorch inter-op threads: {torch.get_num_interop_threads()}")
 
-results_path = Path.cwd() / f'results_{normalizer_str}'
+results_path = Path.cwd() / 'results'
 if not results_path.exists():
     results_path.mkdir(parents=True, exist_ok=True)
 for window_length, window_stepsize_ratio in itertools.product(
         window_lengths, window_stepsize_ratios):
     iteration_start_time = time.time()
-    recorder_path = (
-        results_path / f'test2_results_{window_length:03d}'
-        f'_{window_stepsize_ratio:03d}.pkl'
-    )
-    if recorder_path.exists():
-        logger.warning(f'Skipping {recorder_path} because it already exists.')
-        continue
     with Recorder(
             f'test2_results_{window_length:03d}_{window_stepsize_ratio:03d}',
-            recorder_path,
+            results_path / f'test2_results_{window_length:03d}'
+            f'_{window_stepsize_ratio:03d}.pkl',
     ) as recorder:
         img_stk = load('test2_*.bin', (2, 256, 256))
         recorder.register(img_stk)
@@ -90,15 +64,13 @@ for window_length, window_stepsize_ratio in itertools.product(
         windows = WindowMesh(mapper_in, window_shape, step_shape)
 
         model = EfficientEncoder(windows, mapper_in)
-        windows._window_processor()
-        windows._window_ttcf = normalizer(windows.window_ttcf)
         low_res_feature_map, upscaler = model.extract_embedding(
             full_output=False
         )
 
         recorder.register(windows.window_ttcf, name='window_ttcf')
 
-        mapper = PCA(low_res_feature_map, upscaler)
+        mapper = UMAP(low_res_feature_map, upscaler)
         mapper.generate_rgb(sparsity_mult=20)
 
         recorder.register(

@@ -52,7 +52,7 @@ for frame in frames_of_interest:
     plt.axis('off')
     plt.savefig(plots_folder / f'img_stk_{frame:03d}_0{extension}', **kwargs)
     show()
-    plt.imshow(r.img_stk[0, 1, :, :], cmap=cmap)
+    plt.imshow(r.img_stk[frame, 1, :, :], cmap=cmap)
     plt.axis('off')
     plt.savefig(plots_folder / f'img_stk_{frame:03d}_1{extension}', **kwargs)
     show()

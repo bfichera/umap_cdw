@@ -58,7 +58,7 @@ for frame in frames_of_interest:
     show()
 
 for ttcf_i, ttcf_j in ttcf_idxs:
-    ttcf = r.window_ttcf
+    ttcf = r.window_ttcf[0, ttcf_i, ttcf_j, :, :]
     plt.imshow(ttcf, origin='lower', cmap=cmap)
     plt.axis('off')
     plt.savefig(plots_folder / f'ttcf_{ttcf_i}_{ttcf_j}{extension}', **kwargs)

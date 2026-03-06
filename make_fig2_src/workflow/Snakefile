@@ -49,4 +49,4 @@ rule single:
          OMP_NUM_THREADS={threads} \
          NUMBA_THREADING_LAYER=workqueue \
          UMAP_CDW_DATA={input.data} \
-         ../venv/bin/python {input.script} --half-window-lengths {wildcards.half_window_length} --window-stepsize-ratios {wildcards.window_stepsize_ratio} --output {output} --quick-test"
+         ../venv/bin/python {input.script} --half-window-lengths {wildcards.half_window_length} --window-stepsize-ratios {wildcards.window_stepsize_ratio} --output {output}"

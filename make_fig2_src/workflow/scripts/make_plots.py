@@ -12,8 +12,8 @@ parser.add_argument('--results_path', type=lambda s: Path(s))
 parser.add_argument('--show', action='store_true')
 parser.add_argument('--output-dir', type=lambda s: Path(s))
 parser.add_argument('--extension', type=str, default='.pdf')
-parser.add_argument('--ttcfs_i', nargs='+', type=int)
-parser.add_argument('--ttcfs_j', nargs='+', type=int)
+parser.add_argument('--ttcfs_i', nargs='+', type=float)
+parser.add_argument('--ttcfs_j', nargs='+', type=float)
 _cfg = parser.parse_args()
 do_show = _cfg.show
 output_dir = _cfg.output_dir
@@ -58,10 +58,14 @@ for frame in frames_of_interest:
     show()
 
 for ttcf_i, ttcf_j in ttcf_idxs:
-    ttcf = r.window_ttcf[0, ttcf_i, ttcf_j, :, :]
+    n_i = r.window_ttcf.shape[1]
+    n_j = r.window_ttcf.shape[2]
+    ttcf_i_idx = int(ttcf_i * n_i)
+    ttcf_j_idx = int(ttcf_j * n_j)
+    ttcf = r.window_ttcf[0, ttcf_i_idx, ttcf_j_idx, :, :]
     plt.imshow(ttcf, origin='lower', cmap=cmap)
     plt.axis('off')
-    plt.savefig(plots_folder / f'ttcf_{ttcf_i}_{ttcf_j}{extension}', **kwargs)
+    plt.savefig(plots_folder / f'ttcf_{ttcf_i_idx}_{ttcf_j_idx}{extension}', **kwargs)
 
 plt.imshow(np.sum(r.img_stk[:, 0, :, :], axis=0), cmap=cmap)
 plt.axis('off')

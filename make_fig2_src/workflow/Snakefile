@@ -1,7 +1,7 @@
 HALF_WINDOW_LENGTHS = [6, 12, 18]
 WINDOW_STEPSIZE_RATIOS = [2, 3, 6]
-TTCFS_I = [18, 28]
-TTCFS_J = [20, 26]
+TTCFS_I = [18/41, 28/41]
+TTCFS_J = [20/41, 26/41]
 
 wildcard_constraints:
     half_window_length=r"\d+",

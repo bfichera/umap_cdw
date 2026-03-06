@@ -1,7 +1,7 @@
-HALF_WINDOW_LENGTHS = [6, 12, 18, 24]
-WINDOW_STEPSIZE_RATIOS = [2, 3, 6, 12]
-TTCFS_I = [0, 0]
-TTCFS_J = [1, 1]
+HALF_WINDOW_LENGTHS = [6, 12, 18]
+WINDOW_STEPSIZE_RATIOS = [2, 3, 6]
+TTCFS_I = [18, 28]
+TTCFS_J = [20, 26]
 
 wildcard_constraints:
     half_window_length=r"\d+",
@@ -25,7 +25,7 @@ rule make_plots:
     resources:
         nodes=1,
         mem_str=16,
-        runtime=180
+        runtime=14400
     shell:
         "mkdir -p {output} && ../venv/bin/python {input.script} --results_path {input.results} --output-dir {output} --extension .pdf --ttcfs_i {TTCFS_I} --ttcfs_j {TTCFS_J}"
 
@@ -39,7 +39,7 @@ rule single:
     resources:
         nodes=1,
         mem_str=256,
-        runtime=600
+        runtime=14400
     shell:
         "module load cuda; module load gcc; \
          NUMBA_NUM_THREADS={threads} \

@@ -2,6 +2,8 @@
 # WINDOW_STEPSIZE_RATIOS = [2, 3, 6, 12]
 HALF_WINDOW_LENGTHS = [12]
 WINDOW_STEPSIZE_RATIOS = [6]
+TTCFS_I = [0]
+TTCFS_J = [0]
 
 wildcard_constraints:
     half_window_length=r"\d+",
@@ -27,7 +29,7 @@ rule make_plots:
         mem_str=16,
         runtime=180
     shell:
-        "mkdir -p {output}; ../venv/bin/python {input.script} --results_path {input.results} --output-dir {output} --extension .pdf"
+        "mkdir -p {output} && ../venv/bin/python {input.script} --results_path {input.results} --output-dir {output} --extension .pdf --ttcfs_i {TTCFS_I} --ttcfs_j {TTCFS_J}"
 
 rule single:
     input:

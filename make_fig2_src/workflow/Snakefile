@@ -1,0 +1,43 @@
+HALF_WINDOW_LENGTHS = [6, 12, 18, 24]
+WINDOW_STEPSIZE_RATIOS = [2, 3, 6, 12]
+
+wildcard_constraints:
+    half_window_length=r"\d+",
+    window_stepsize_ratio=r"\d+"
+
+rule all:
+    input:
+        expand(
+            "plots/half_window_length_{half_window_length}/window_stepsize_ratio_{window_stepsize_ratio}",
+            half_window_length=HALF_WINDOW_LENGTHS,
+            window_stepsize_ratio=WINDOW_STEPSIZE_RATIOS,
+        )
+
+rule make_plots:
+    input:
+        script="workflow/scripts/make_plots.py",
+        results="test2_results_{half_window_length}_{window_stepsize_ratio}.pkl"
+    output:
+        directory("plots/half_window_length_{half_window_length}/window_stepsize_ratio_{window_stepsize_ratio}")
+    shell:
+        "../venv/bin/python {input.script} --results_path {input.results} --output-dir {output} --extension .pdf"
+
+rule single:
+    input:
+        script="workflow/scripts/no_diagonal.py",
+        data="../data"
+    output:
+        protected("test2_results_{half_window_length}_{window_stepsize_ratio}.pkl")
+    threads: 16
+    resources:
+        nodes=1,
+        mem_str=256,
+        runtime=600
+    shell:
+        "module load cuda; module load gcc; \
+         NUMBA_NUM_THREADS={threads} \
+         MKL_NUM_THREADS={threads} \
+         OMP_NUM_THREADS={threads} \
+         NUMBA_THREADING_LAYER=workqueue \
+         UMAP_CDW_DATA={input.data} \
+         ../venv/bin/python {input.script} --half-window-lengths {wildcards.half_window_length} --window-stepsize-ratios {wildcards.window_stepsize_ratio} --output {output} --quick-test"

@@ -5,16 +5,26 @@ import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 
+cmap = 'viridis'
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--results_path', type=lambda s: Path(s))
 parser.add_argument('--show', action='store_true')
 parser.add_argument('--output-dir', type=lambda s: Path(s))
 parser.add_argument('--extension', type=str, default='.pdf')
+parser.add_argument('--ttcfs_i', nargs='+', type=int)
+parser.add_argument('--ttcfs_j', nargs='+', type=int)
 _cfg = parser.parse_args()
 do_show = _cfg.show
 output_dir = _cfg.output_dir
 results_path = _cfg.results_path
 extension = _cfg.extension
+ttcf_idxs = np.array(list(zip(_cfg.ttcfs_i, _cfg.ttcfs_j)))
+
+kwargs = {
+    'bbox_inches': 'tight',
+    'pad_inches': 0,
+}
 
 if do_show:
     show = plt.show
@@ -26,31 +36,50 @@ else:
 plots_folder = _cfg.output_dir
 with open(results_path, 'rb') as fh:
     r = pickle.load(fh)
-plt.imshow(r.mapper_low_res_rgb[0, :, :, :])
-plt.savefig(plots_folder / f'low_res_rgb{extension}')
+plt.imshow(r.mapper_low_res_rgb[0, :, :, :], cmap=cmap)
+plt.axis('off')
+plt.savefig(plots_folder / f'low_res_rgb{extension}', **kwargs)
 show()
-plt.imshow(r.mapper_rgb[0, :, :, :])
-plt.savefig(plots_folder / f'rgb{extension}')
+plt.imshow(r.mapper_rgb[0, :, :, :], cmap=cmap)
+plt.axis('off')
+plt.savefig(plots_folder / f'rgb{extension}', **kwargs)
 show()
-plt.imshow(r.img_stk[0, 0, :, :])
-plt.savefig(plots_folder / f'img_stk0{extension}')
+
+num_frames = r.img_stk.shape[0]
+frames_of_interest = np.linspace(0, num_frames, 3, endpoint=False, dtype=int)
+for frame in frames_of_interest:
+    plt.imshow(r.img_stk[frame, 0, :, :], cmap=cmap)
+    plt.axis('off')
+    plt.savefig(plots_folder / f'img_stk_{frame:03d}_0{extension}', **kwargs)
+    show()
+    plt.imshow(r.img_stk[0, 1, :, :], cmap=cmap)
+    plt.axis('off')
+    plt.savefig(plots_folder / f'img_stk_{frame:03d}_1{extension}', **kwargs)
+    show()
+
+for ttcf_i, ttcf_j in ttcf_idxs:
+    ttcf = r.window_ttcf
+    plt.imshow(ttcf, origin='lower', cmap=cmap)
+    plt.axis('off')
+    plt.savefig(plots_folder / f'ttcf_{ttcf_i}_{ttcf_j}{extension}', **kwargs)
+
+plt.imshow(np.sum(r.img_stk[:, 0, :, :], axis=0), cmap=cmap)
+plt.axis('off')
+plt.savefig(plots_folder / f'sum_img_stk0{extension}', **kwargs)
 show()
-plt.imshow(r.img_stk[0, 1, :, :])
-plt.savefig(plots_folder / f'img_stk1{extension}')
-show()
-plt.imshow(np.sum(r.img_stk[:, 0, :, :], axis=0))
-plt.savefig(plots_folder / f'sum_img_stk0{extension}')
-show()
-plt.imshow(np.sum(r.img_stk[:, 1, :, :], axis=0))
-plt.savefig(plots_folder / f'sum_img_stk1{extension}')
+plt.imshow(np.sum(r.img_stk[:, 1, :, :], axis=0), cmap=cmap)
+plt.axis('off')
+plt.savefig(plots_folder / f'sum_img_stk1{extension}', **kwargs)
 show()
 plt.imshow(
-    np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 0, :, :])))
+    np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 0, :, :]))),
+    cmap=cmap,
 )
 plt.savefig(plots_folder / f'fft_img_stk0{extension}')
 show()
 plt.imshow(
-    np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 1, :, :])))
+    np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 1, :, :]))),
+    cmap=cmap,
 )
 plt.savefig(plots_folder / f'fft_img_stk1{extension}')
 show()
@@ -68,7 +97,8 @@ plt.close()
 
 s0, s1, s2, s3, s4 = r.window_ttcf.shape
 plt.imshow(
-    np.std(r.window_ttcf.reshape(s0, s1, s2, s3 * s4), axis=-1)[0, :, :]
+    np.std(r.window_ttcf.reshape(s0, s1, s2, s3 * s4), axis=-1)[0, :, :],
+    cmap=cmap,
 )
 plt.savefig(plots_folder / f'rms_contrast{extension}')
 show()
@@ -79,7 +109,8 @@ plt.imshow(
     (
         (t.max(axis=-1) - t.min(axis=-1)) /
         (t.max(axis=-1) + t.min(axis=-1))
-    )[0, :, :]
+    )[0, :, :],
+    cmap=cmap,
 )
 plt.savefig(plots_folder / f'michelson_contrast{extension}')
 show()

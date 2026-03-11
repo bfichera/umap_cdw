@@ -70,14 +70,21 @@ params['img_stk_0_vmax'] = cdw_vmax_0
 params['img_stk_1_vmin'] = cdw_vmin_1
 params['img_stk_1_vmax'] = cdw_vmax_1
 for frame in frames_of_interest:
-    plt.imshow(r.img_stk[frame, 0, :, :], cmap=cmap, vmin=cdw_vmin_0, vmax=cdw_vmax_0)
+    mappable_0 = plt.imshow(r.img_stk[frame, 0, :, :], cmap=cmap, vmin=cdw_vmin_0, vmax=cdw_vmax_0)
     plt.axis('off')
     plt.savefig(plots_folder / f'img_stk_{frame:03d}_0{extension}', **kwargs)
     show()
-    plt.imshow(r.img_stk[frame, 1, :, :], cmap=cmap, vmin=cdw_vmin_1, vmax=cdw_vmax_1)
+    mappable_1 = plt.imshow(r.img_stk[frame, 1, :, :], cmap=cmap, vmin=cdw_vmin_1, vmax=cdw_vmax_1)
     plt.axis('off')
     plt.savefig(plots_folder / f'img_stk_{frame:03d}_1{extension}', **kwargs)
     show()
+
+fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
+cbar = fig_cbar.colorbar(mappable_0, cax=ax_cbar)
+plt.savefig(f'img_stk_0_colorbar{extension}', **kwargs)
+fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
+cbar = fig_cbar.colorbar(mappable_1, cax=ax_cbar)
+plt.savefig(f'img_stk_1_colorbar{extension}', **kwargs)
 
 ttcf_vmin = np.inf
 ttcf_vmax = -np.inf
@@ -108,12 +115,15 @@ cbar = fig_cbar.colorbar(mappable, cax=ax_cbar)
 plt.savefig('ttcf_colorbar.pdf', **kwargs)
 
 im = np.sum(r.img_stk[:, 0, :, :], axis=0)
-plt.imshow(im, cmap=cmap, vmin=np.amin(im), vmax=np.amax(im))
+mappable = plt.imshow(im, cmap=cmap, vmin=np.amin(im), vmax=np.amax(im))
 params['sum_img_stk_0_vmin'] = np.amin(im)
 params['sum_img_stk_0_vmax'] = np.amax(im)
 plt.axis('off')
 plt.savefig(plots_folder / f'sum_img_stk0{extension}', **kwargs)
 show()
+fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
+cbar = fig_cbar.colorbar(mappable, cax=ax_cbar)
+plt.savefig('sum_img_stk_0_colorbar.pdf', **kwargs)
 im = np.sum(r.img_stk[:, 1, :, :], axis=0)
 params['sum_img_stk_1_vmin'] = np.amin(im)
 params['sum_img_stk_1_vmax'] = np.amax(im)
@@ -121,6 +131,9 @@ plt.imshow(im, cmap=cmap, vmin=np.amin(im), vmax=np.amax(im))
 plt.axis('off')
 plt.savefig(plots_folder / f'sum_img_stk1{extension}', **kwargs)
 show()
+fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
+cbar = fig_cbar.colorbar(mappable, cax=ax_cbar)
+plt.savefig('sum_img_stk_1_colorbar.pdf', **kwargs)
 plt.imshow(
     np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 0, :, :]))),
     cmap=cmap,

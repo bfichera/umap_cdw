@@ -1,6 +1,7 @@
 from pathlib import Path
 import pickle
 import argparse
+import json
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -26,6 +27,8 @@ kwargs = {
     'pad_inches': 0,
 }
 
+params = {}
+
 if do_show:
     show = plt.show
 else:
@@ -47,31 +50,74 @@ show()
 
 num_frames = r.img_stk.shape[0]
 frames_of_interest = np.linspace(0, num_frames, 3, endpoint=False, dtype=int)
+cdw_vmin_0 = np.inf
+cdw_vmax_0 = -np.inf
+cdw_vmin_1 = np.inf
+cdw_vmax_1 = -np.inf
 for frame in frames_of_interest:
-    plt.imshow(r.img_stk[frame, 0, :, :], cmap=cmap)
+    im = r.img_stk[frame, 0, :, :]
+    if np.amin(im) < cdw_vmin_0:
+        cdw_vmin_0 = np.amin(im)
+    if np.amax(im) < cdw_vmax_0:
+        cdw_vmax_0 = np.amax(im)
+    im = r.img_stk[frame, 1, :, :]
+    if np.amin(im) < cdw_vmin_1:
+        cdw_vmin_1 = np.amin(im)
+    if np.amax(im) < cdw_vmax_1:
+        cdw_vmax_1 = np.amax(im)
+params['img_stk_0_vmin'] = cdw_vmin_0
+params['img_stk_0_vmax'] = cdw_vmax_0
+params['img_stk_1_vmin'] = cdw_vmin_1
+params['img_stk_1_vmax'] = cdw_vmax_1
+for frame in frames_of_interest:
+    plt.imshow(r.img_stk[frame, 0, :, :], cmap=cmap, vmin=cdw_vmin_0, vmax=cdw_vmax_0)
     plt.axis('off')
     plt.savefig(plots_folder / f'img_stk_{frame:03d}_0{extension}', **kwargs)
     show()
-    plt.imshow(r.img_stk[frame, 1, :, :], cmap=cmap)
+    plt.imshow(r.img_stk[frame, 1, :, :], cmap=cmap, vmin=cdw_vmin_1, vmax=cdw_vmax_1)
     plt.axis('off')
     plt.savefig(plots_folder / f'img_stk_{frame:03d}_1{extension}', **kwargs)
     show()
 
+ttcf_vmin = np.inf
+ttcf_vmax = -np.inf
 for ttcf_i, ttcf_j in ttcf_idxs:
     n_i = r.window_ttcf.shape[1]
     n_j = r.window_ttcf.shape[2]
     ttcf_i_idx = int(ttcf_i * n_i)
     ttcf_j_idx = int(ttcf_j * n_j)
     ttcf = r.window_ttcf[0, ttcf_i_idx, ttcf_j_idx, :, :]
-    plt.imshow(ttcf, origin='lower', cmap=cmap)
+    if np.amax(ttcf) > ttcf_vmax:
+        ttcf_vmax = np.amax(ttcf)
+    if np.amin(ttcf) < ttcf_vmin:
+        ttcf_vmin = np.amin(ttcf)
+ttcf_vmin = 0
+params['ttcf_vmin'] = ttcf_vmin
+params['ttcf_vmax'] = ttcf_vmax
+for ttcf_i, ttcf_j in ttcf_idxs:
+    n_i = r.window_ttcf.shape[1]
+    n_j = r.window_ttcf.shape[2]
+    ttcf_i_idx = int(ttcf_i * n_i)
+    ttcf_j_idx = int(ttcf_j * n_j)
+    ttcf = r.window_ttcf[0, ttcf_i_idx, ttcf_j_idx, :, :]
+    mappable = plt.imshow(ttcf, origin='lower', cmap=cmap, vmin=ttcf_vmin, vmax=ttcf_vmax)
     plt.axis('off')
     plt.savefig(plots_folder / f'ttcf_{ttcf_i_idx}_{ttcf_j_idx}{extension}', **kwargs)
+fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
+cbar = fig_cbar.colorbar(mappable, cax=ax_cbar)
+plt.savefig('ttcf_colorbar.pdf', **kwargs)
 
-plt.imshow(np.sum(r.img_stk[:, 0, :, :], axis=0), cmap=cmap)
+im = np.sum(r.img_stk[:, 0, :, :], axis=0)
+plt.imshow(im, cmap=cmap, vmin=np.amin(im), vmax=np.amax(im))
+params['sum_img_stk_0_vmin'] = np.amin(im)
+params['sum_img_stk_0_vmax'] = np.amax(im)
 plt.axis('off')
 plt.savefig(plots_folder / f'sum_img_stk0{extension}', **kwargs)
 show()
-plt.imshow(np.sum(r.img_stk[:, 1, :, :], axis=0), cmap=cmap)
+im = np.sum(r.img_stk[:, 1, :, :], axis=0)
+params['sum_img_stk_1_vmin'] = np.amin(im)
+params['sum_img_stk_1_vmax'] = np.amax(im)
+plt.imshow(im, cmap=cmap, vmin=np.amin(im), vmax=np.amax(im))
 plt.axis('off')
 plt.savefig(plots_folder / f'sum_img_stk1{extension}', **kwargs)
 show()
@@ -119,3 +165,6 @@ plt.imshow(
 plt.savefig(plots_folder / f'michelson_contrast{extension}')
 show()
 plt.close()
+
+with open(plots_folder / 'params.json', 'w') as fh:
+    json.dump(params, fh)

@@ -83,10 +83,12 @@ fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
 cbar = fig_cbar.colorbar(mappable_0, cax=ax_cbar)
 cbar.set_ticks([])
 plt.savefig(plots_folder / f'img_stk_0_colorbar{extension}', **kwargs)
+plt.close()
 fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
 cbar = fig_cbar.colorbar(mappable_1, cax=ax_cbar)
 cbar.set_ticks([])
 plt.savefig(plots_folder / f'img_stk_1_colorbar{extension}', **kwargs)
+plt.close()
 
 ttcf_vmin = np.inf
 ttcf_vmax = -np.inf
@@ -116,6 +118,7 @@ fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
 cbar = fig_cbar.colorbar(mappable, cax=ax_cbar)
 cbar.set_ticks([])
 plt.savefig(plots_folder / 'ttcf_colorbar.pdf', **kwargs)
+plt.close()
 
 im = np.sum(r.img_stk[:, 0, :, :], axis=0)
 mappable = plt.imshow(im, cmap=cmap, vmin=np.amin(im), vmax=np.amax(im))
@@ -128,6 +131,7 @@ fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
 cbar = fig_cbar.colorbar(mappable, cax=ax_cbar)
 cbar.set_ticks([])
 plt.savefig(plots_folder / 'sum_img_stk_0_colorbar.pdf', **kwargs)
+plt.close()
 im = np.sum(r.img_stk[:, 1, :, :], axis=0)
 params['sum_img_stk_1_vmin'] = np.amin(im)
 params['sum_img_stk_1_vmax'] = np.amax(im)
@@ -139,6 +143,7 @@ fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
 cbar = fig_cbar.colorbar(mappable, cax=ax_cbar)
 cbar.set_ticks([])
 plt.savefig(plots_folder / 'sum_img_stk_1_colorbar.pdf', **kwargs)
+plt.close()
 plt.imshow(
     np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 0, :, :]))),
     cmap=cmap,

@@ -58,12 +58,12 @@ for frame in frames_of_interest:
     im = r.img_stk[frame, 0, :, :]
     if np.amin(im) < cdw_vmin_0:
         cdw_vmin_0 = np.amin(im)
-    if np.amax(im) < cdw_vmax_0:
+    if np.amax(im) > cdw_vmax_0:
         cdw_vmax_0 = np.amax(im)
     im = r.img_stk[frame, 1, :, :]
     if np.amin(im) < cdw_vmin_1:
         cdw_vmin_1 = np.amin(im)
-    if np.amax(im) < cdw_vmax_1:
+    if np.amax(im) > cdw_vmax_1:
         cdw_vmax_1 = np.amax(im)
 params['img_stk_0_vmin'] = cdw_vmin_0
 params['img_stk_0_vmax'] = cdw_vmax_0

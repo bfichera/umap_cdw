@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 cmap = 'viridis'
+ttcf_cmap = 'magma'
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--results_path', type=lambda s: Path(s))
@@ -111,7 +112,7 @@ for ttcf_i, ttcf_j in ttcf_idxs:
     ttcf_i_idx = int(ttcf_i * n_i)
     ttcf_j_idx = int(ttcf_j * n_j)
     ttcf = r.window_ttcf[0, ttcf_i_idx, ttcf_j_idx, :, :]
-    mappable = plt.imshow(ttcf, origin='lower', cmap=cmap, vmin=ttcf_vmin, vmax=ttcf_vmax)
+    mappable = plt.imshow(ttcf, origin='lower', cmap=ttcf_cmap, vmin=ttcf_vmin, vmax=ttcf_vmax)
     plt.axis('off')
     plt.savefig(plots_folder / f'ttcf_{ttcf_i_idx}_{ttcf_j_idx}{extension}', **kwargs)
 fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))

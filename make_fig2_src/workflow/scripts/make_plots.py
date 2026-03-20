@@ -6,6 +6,7 @@ import json
 import numpy as np
 import matplotlib.pyplot as plt
 
+data_cmap = 'Greys'
 cmap = 'viridis'
 ttcf_cmap = 'magma'
 
@@ -40,11 +41,11 @@ else:
 plots_folder = _cfg.output_dir
 with open(results_path, 'rb') as fh:
     r = pickle.load(fh)
-plt.imshow(r.mapper_low_res_rgb[0, :, :, :], cmap=cmap)
+plt.imshow(r.mapper_low_res_rgb[0, :, :, :], cmap=data_cmap)
 plt.axis('off')
 plt.savefig(plots_folder / f'low_res_rgb{extension}', **kwargs)
 show()
-plt.imshow(r.mapper_rgb[0, :, :, :], cmap=cmap)
+plt.imshow(r.mapper_rgb[0, :, :, :], cmap=data_cmap)
 plt.axis('off')
 plt.savefig(plots_folder / f'rgb{extension}', **kwargs)
 show()
@@ -71,11 +72,11 @@ params['img_stk_0_vmax'] = cdw_vmax_0
 params['img_stk_1_vmin'] = cdw_vmin_1
 params['img_stk_1_vmax'] = cdw_vmax_1
 for frame in frames_of_interest:
-    mappable_0 = plt.imshow(r.img_stk[frame, 0, :, :], cmap=cmap, vmin=cdw_vmin_0, vmax=cdw_vmax_0)
+    mappable_0 = plt.imshow(r.img_stk[frame, 0, :, :], cmap=data_cmap, vmin=cdw_vmin_0, vmax=cdw_vmax_0)
     plt.axis('off')
     plt.savefig(plots_folder / f'img_stk_{frame:03d}_0{extension}', **kwargs)
     show()
-    mappable_1 = plt.imshow(r.img_stk[frame, 1, :, :], cmap=cmap, vmin=cdw_vmin_1, vmax=cdw_vmax_1)
+    mappable_1 = plt.imshow(r.img_stk[frame, 1, :, :], cmap=data_cmap, vmin=cdw_vmin_1, vmax=cdw_vmax_1)
     plt.axis('off')
     plt.savefig(plots_folder / f'img_stk_{frame:03d}_1{extension}', **kwargs)
     show()

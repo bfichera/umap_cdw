@@ -159,6 +159,43 @@ plt.imshow(
 plt.savefig(plots_folder / f'fft_img_stk1{extension}')
 show()
 
+im = r.img_stk[-1, 0, :, :] - r.img_stk[0, 0, :, :]
+mappable = plt.imshow(im, cmap=cmap, vmin=np.amin(im), vmax=np.amax(im))
+params['diff_img_stk_0_vmin'] = np.amin(im)
+params['diff_img_stk_0_vmax'] = np.amax(im)
+plt.axis('off')
+plt.savefig(plots_folder / f'diff_img_stk0{extension}', **kwargs)
+show()
+fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
+cbar = fig_cbar.colorbar(mappable, cax=ax_cbar)
+cbar.set_ticks([])
+plt.savefig(plots_folder / 'diff_img_stk_0_colorbar.pdf', **kwargs)
+plt.close()
+im = r.img_stk[-1, 1, :, :] - r.img_stk[0, 1, :, :]
+params['diff_img_stk_1_vmin'] = np.amin(im)
+params['diff_img_stk_1_vmax'] = np.amax(im)
+plt.imshow(im, cmap=cmap, vmin=np.amin(im), vmax=np.amax(im))
+plt.axis('off')
+plt.savefig(plots_folder / f'diff_img_stk1{extension}', **kwargs)
+show()
+fig_cbar, ax_cbar = plt.subplots(figsize=(1.5, 6))
+cbar = fig_cbar.colorbar(mappable, cax=ax_cbar)
+cbar.set_ticks([])
+plt.savefig(plots_folder / 'diff_img_stk_1_colorbar.pdf', **kwargs)
+plt.close()
+plt.imshow(
+    np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 0, :, :]))),
+    cmap=cmap,
+)
+plt.savefig(plots_folder / f'fft_img_stk0{extension}')
+show()
+plt.imshow(
+    np.absolute(np.fft.fftshift(np.fft.fft2(r.img_stk[0, 1, :, :]))),
+    cmap=cmap,
+)
+plt.savefig(plots_folder / f'fft_img_stk1{extension}')
+show()
+
 fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
 u0, u1, u2, u3 = r.mapper_low_res_rgb.shape
 collapsed_rgb = r.mapper_low_res_rgb.reshape(u1 * u2, 3)
